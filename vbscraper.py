@@ -205,8 +205,8 @@ class VBSession(object):
         )
         page_number = li.text.strip()
 
-        if not page_number == '1':
-            raise RuntimeError('Postbox does not start with page 1')
+        if not page_number:
+            raise RuntimeError('Postbox current page number not found')
 
         if not document.postbox_page == page_number:
             # get postbox page
@@ -214,7 +214,13 @@ class VBSession(object):
                 print("Access postbox page {}".format(document.postbox_page))
 
             while not li.text.strip() == document.postbox_page:
-                li = li.find_next_sibling()
+                if li.find_next_sibling():
+                    li = li.find_next_sibling()
+                else: # page not in current scope, move on to last found page and look again
+                    self.postbox_url = li.a['href']
+                    self.download_document(document, destinations)
+                    return
+
 
             page_url = li.a['href']
             r = self.s.get(self.base_url + page_url)
