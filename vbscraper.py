@@ -5,9 +5,11 @@
 # This file is in the Public Domain as specified by
 # http://creativecommons.org/publicdomain/zero/1.0/
 
+# grabbed from https://github.com/andsor/VB-Scraper (Andreas Sorge)
+# and slightly modified
+
 import requests
 import lxml.html
-import getpass
 import bs4
 import collections
 import datetime
@@ -45,7 +47,7 @@ class VBSession(object):
         self.login_url = '/ptlweb/WebPortal?bankid={}'.format(self.bank_id)
         self.verbose = verbose
 
-    def login(self, username):
+    def login(self, username, password):
         """
         Login to Volksbank Online Banking
         """
@@ -63,7 +65,7 @@ class VBSession(object):
         # Fill in username and password
         login_data = dict(login_form.fields)
         login_data['pruefenPIN_V01_VO.strVrKennungOderAlias'] = username
-        login_data['pruefenPIN_V01_VO.txtKkdPwTrp'] = getpass.getpass()
+        login_data['pruefenPIN_V01_VO.txtKkdPwTrp'] = password
         login_data['event___login'] = 'Login'
 
         # Post login
