@@ -18,6 +18,7 @@ import shutil
 import os
 import os.path
 
+html_parser = "html.parser" # let BeautifulSoup choose html parser
 
 PostboxDocument = collections.namedtuple(
     'PostboxDocument',
@@ -75,7 +76,7 @@ class VBSession(object):
         )
 
         # Parse returned page
-        soup = bs4.BeautifulSoup(r.text)
+        soup = bs4.BeautifulSoup(r.text, html_parser)
 
         if not soup.find(text='Finanzstatus'):
             raise RuntimeError('Login to Volksbank Online Banking failed.')
@@ -114,7 +115,7 @@ class VBSession(object):
         r = self.s.get(self.base_url + self.postbox_url)
 
         # Parse Postbox page
-        soup = bs4.BeautifulSoup(r.text)
+        soup = bs4.BeautifulSoup(r.text, html_parser)
 
         # Get number of pages
         li = soup.find('li', attrs={'class': 'gad-paginationActivePageNumber'})
@@ -184,7 +185,7 @@ class VBSession(object):
             r = self.s.get(self.base_url + a_next_page['href'])
 
             # Parse Postbox page
-            soup = bs4.BeautifulSoup(r.text)
+            soup = bs4.BeautifulSoup(r.text, html_parser)
 
         return ret
 
@@ -200,7 +201,7 @@ class VBSession(object):
         r = self.s.get(self.base_url + self.postbox_url)
 
         # Parse Postbox page
-        soup = bs4.BeautifulSoup(r.text)
+        soup = bs4.BeautifulSoup(r.text, html_parser)
 
         # Get current page number
         li = soup.find(
@@ -230,7 +231,7 @@ class VBSession(object):
         r = self.s.get(self.base_url + document.url)
 
         # parse message page
-        soup = bs4.BeautifulSoup(r.text)
+        soup = bs4.BeautifulSoup(r.text, html_parser)
 
         #subject = msg_soup.find(
         #    'label', attrs={'for': 'messageSenderSubject'}
