@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
+# SPDX-License-Identifier: CC0-1.0
 # This file is in the Public Domain as specified by
 # http://creativecommons.org/publicdomain/zero/1.0/
 
