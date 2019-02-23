@@ -226,7 +226,7 @@ class VBSession(object):
 
         # get message page
         if self.verbose:
-            print("Download document {}".format(document.subject))
+            print(u"Download document {}".format(document.subject))
 
         r = self.s.get(self.base_url + document.url)
 
