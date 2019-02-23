@@ -247,6 +247,9 @@ class VBSession(object):
             'a', title='Anhang öffnen'
         )
 
+        if not attachment_a: # message in postbox has no attachment to download
+            return
+
         attachment_url = attachment_a['href']
 
         filename = attachment_a.text
