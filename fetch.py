@@ -12,13 +12,15 @@ from appdirs import *
 
 appname = "glsfetch"
 appauthor = "glsfetch"
-configfile = user_data_dir(appname, appauthor, roaming=False)+".ini"
+configfile = user_data_dir(appname, appauthor, roaming=False) + ".ini"
 
 config = configparser.ConfigParser()
 config.read(configfile)
 
 if not config['bank']:
-    print(configfile + " not found. Please read instructions (copy and edit example.ini).")
+    print(
+        configfile +
+        " not found. Please read instructions (copy and edit example.ini).")
     sys.exit(1)
 
 base_url = config['bank']['base_url']
@@ -36,7 +38,8 @@ documents = list(scraper.postbox_items())
 
 for document in documents:
     # comment next line if you want to fetch all documents, not only new ones
-    if not document.is_new: continue
+    if not document.is_new:
+        continue
     # unused in this example: put documents in another directory
     directory = ""
     scraper.download_document(document, [directory])

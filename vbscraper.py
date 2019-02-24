@@ -18,7 +18,7 @@ import shutil
 import os
 import os.path
 
-html_parser = "html.parser" # let BeautifulSoup choose html parser
+html_parser = "html.parser"  # let BeautifulSoup choose html parser
 
 PostboxDocument = collections.namedtuple(
     'PostboxDocument',
@@ -220,11 +220,10 @@ class VBSession(object):
             while not li.text.strip() == document.postbox_page:
                 if li.find_next_sibling():
                     li = li.find_next_sibling()
-                else: # page not in current scope, move on to last found page and look again
+                else:  # page not in current scope, move on to last found page and look again
                     self.postbox_url = li.a['href']
                     self.download_document(document, destinations)
                     return
-
 
             page_url = li.a['href']
             r = self.s.get(self.base_url + page_url)
@@ -239,15 +238,15 @@ class VBSession(object):
         # parse message page
         soup = bs4.BeautifulSoup(r.text, html_parser)
 
-        #subject = msg_soup.find(
+        # subject = msg_soup.find(
         #    'label', attrs={'for': 'messageSenderSubject'}
-        #).parent.find_next_sibling().span.text
+        # ).parent.find_next_sibling().span.text
 
         attachment_a = soup.find(
             'a', title='Anhang öffnen'
         )
 
-        if not attachment_a: # message in postbox has no attachment to download
+        if not attachment_a:  # message in postbox has no attachment to download
             return
 
         attachment_url = attachment_a['href']
